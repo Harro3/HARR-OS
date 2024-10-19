@@ -1,0 +1,4 @@
+build/
+cross/
+.clang-format
+compile_flags.txt
