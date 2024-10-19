@@ -86,5 +86,6 @@ void isr_handler(registers_t r)
     itoa(r.int_no, s);
     tty_puts(s);
     tty_puts(exception_messages[r.int_no]);
-    ;
+
+    // TODO: __asm__("hlt"); for some int codes
 }
