@@ -20,3 +20,38 @@ void *memmove(void *dest, const void *src, size_t n)
 
     return dest;
 }
+
+void itoa(int n, char *res)
+{
+    if (n == 0)
+    {
+        res[0] = '0';
+        res[1] = 0;
+        return;
+    }
+    if (n < 0)
+    {
+        n = -n;
+        res[0] = '-';
+        res++;
+    }
+
+    int digits = 0;
+
+    int tmp = n;
+    while (tmp)
+    {
+        digits++;
+        tmp /= 10;
+    }
+
+    res[digits] = 0;
+
+    while (digits)
+    {
+        int last = n % 10;
+        res[digits - 1] = '0' + last;
+        digits--;
+        n /= 10;
+    }
+}

@@ -9,12 +9,12 @@ CFLAGS=-Iinclude -Iinclude/stdlib -m32 -nostdlib -nostdinc -fno-builtin -fno-sta
 BUILDDIR=./build
 OBJDIR=$(BUILDDIR)/obj
 
-SRC=$(wildcard src/kernel/*.c src/drivers/*.c src/stdlib/*.c)
-HEADERS=$(wildcard src/kernel/*.h src/drivers/*.c src/stdlib/*.h)
+SRC=$(wildcard src/kernel/*.c src/drivers/*.c src/stdlib/*.c src/x86/*.c)
+HEADERS=$(wildcard include/**/*.c)
 KERNEL_ENTRY=src/kernel/entry.asm
 
 KERNEL_ENTRY_OBJ=$(patsubst src/%.asm, $(OBJDIR)/%.o, $(KERNEL_ENTRY))
-OBJ=$(patsubst src/%.c, $(OBJDIR)/%.o, $(SRC))
+OBJ=$(patsubst src/%.c, $(OBJDIR)/%.o, $(SRC)) $(OBJDIR)/x86/interrupt.o
 
 BS_BIN=$(BUILDDIR)/boot/main.bin
 KERNEL_BIN=$(BUILDDIR)/kernel.bin
