@@ -39,5 +39,6 @@ void tty_clear(void);
 void tty_print(char *str);
 void tty_puts(char *str);
 void tty_putc(char c);
+void tty_backspace(void);
 
 #endif /* TTY_H */

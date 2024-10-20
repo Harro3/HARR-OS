@@ -2,6 +2,7 @@
 
 #include "string.h"
 #include "x86/ports.h"
+#include "x86/timer.h"
 
 // FWD
 int coords_to_offset(int x, int y);
@@ -164,4 +165,16 @@ int vmem_print_char(int offset, char c)
 
     set_cursor_offset(offset);
     return offset;
+}
+
+void tty_backspace(void)
+{
+    int offset = get_cursor_offset();
+    offset -= 2;
+
+    set_cursor_offset(offset);
+    char *vmem = (char *)VIDEO_MEMORY;
+
+    vmem[offset] = ' ';
+    vmem[offset + 1] = get_attr();
 }

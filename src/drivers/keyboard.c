@@ -53,6 +53,15 @@ static void stream_push(char c)
     }
 }
 
+static void stream_pop(void)
+{
+    if (stream.index > 0)
+    {
+        tty_backspace();
+        stream.index--;
+    }
+}
+
 static void keyboard_callback(registers_t regs)
 {
     (void)regs;
@@ -62,7 +71,14 @@ static void keyboard_callback(registers_t regs)
     if (scancode > SC_MAX)
         return;
 
-    stream_push(sc_ascii[scancode]);
+    if (scancode == BACKSPACE)
+    {
+        stream_pop();
+    }
+    else
+    {
+        stream_push(sc_ascii[scancode]);
+    }
 }
 
 void init_keyboard(void)
