@@ -1,7 +1,7 @@
 #include "drivers/tty.h"
 
-#include "drivers/ports.h"
 #include "string.h"
+#include "x86/ports.h"
 
 // FWD
 int coords_to_offset(int x, int y);

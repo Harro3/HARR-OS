@@ -1,7 +1,7 @@
 #include "x86/timer.h"
 
-#include "drivers/ports.h"
 #include "x86/isr.h"
+#include "x86/ports.h"
 
 u32 tick = 0;
 

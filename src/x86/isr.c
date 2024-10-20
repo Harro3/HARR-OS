@@ -1,9 +1,11 @@
 #include "x86/isr.h"
 
-#include "drivers/ports.h"
+#include "drivers/keyboard.h"
 #include "drivers/tty.h"
 #include "string.h"
 #include "x86/idt.h"
+#include "x86/ports.h"
+#include "x86/timer.h"
 
 isr_t interrupt_handlers[256];
 
@@ -148,4 +150,11 @@ void irq_handler(registers_t r)
         isr_t handler = interrupt_handlers[r.int_no];
         handler(r);
     }
+}
+
+void irq_install(void)
+{
+    __asm__ __volatile__("sti");
+    init_timer(50);
+    init_keyboard();
 }
