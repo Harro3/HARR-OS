@@ -1,6 +1,6 @@
 #include "drivers/tty.h"
-#include "string.h"
 #include "x86/isr.h"
+#include "x86/timer.h"
 
 int main(void)
 {
@@ -8,18 +8,9 @@ int main(void)
     tty_clear();
     tty_set_cursor_pos(0, 0);
 
-    char buf[4];
-
-    for (int i = 10; i > -1; i--)
-    {
-        int c = 10 / i;
-
-        itoa(c, buf);
-        tty_puts(buf);
-    }
-    /* Test the interrupts */
-    /*__asm__ __volatile__("int $2");*/
-    /*__asm__ __volatile__("int $3");*/
+    // __asm__ __volatile__("sti");
+    __asm__ volatile("sti");
+    init_timer(50);
 }
 
 // faire les dossiers include, obj et dist

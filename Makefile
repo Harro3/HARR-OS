@@ -18,7 +18,7 @@ OBJ=$(patsubst src/%.c, $(OBJDIR)/%.o, $(SRC)) $(OBJDIR)/x86/interrupt.o
 
 BS_BIN=$(BUILDDIR)/boot/main.bin
 KERNEL_BIN=$(BUILDDIR)/kernel.bin
-KERNEL_ELF=$(BUILDDIR)kernel.elf
+KERNEL_ELF=$(BUILDDIR)/kernel.elf
 BIN=$(BUILDDIR)/harr-os.bin
 
 all: $(BIN)
@@ -54,11 +54,6 @@ $(BIN): $(BS_BIN) $(KERNEL_BIN)
 
 
 clean:
-	$(RM) $(BIN)
-	$(RM) $(KERNEL_BIN)
-	$(RM) $(KERNEL_ELF)
-	$(RM) $(BS_BIN)
-	$(RM) $(OBJ)
-	$(RM) $(KERNEL_ENTRY_OBJ)
+	$(RM) -r $(BUILDDIR)
 
 .PHONY: all clean boot debug

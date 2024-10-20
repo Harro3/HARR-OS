@@ -1,8 +1,11 @@
 #include "x86/isr.h"
 
+#include "drivers/ports.h"
 #include "drivers/tty.h"
 #include "string.h"
 #include "x86/idt.h"
+
+isr_t interrupt_handlers[256];
 
 void isr_install(void)
 {
@@ -40,6 +43,42 @@ void isr_install(void)
     set_idt_gate(29, (u32)isr29);
     set_idt_gate(30, (u32)isr30);
     set_idt_gate(31, (u32)isr31);
+
+    // By default IRQs are mapped to INT 0x8-0xF
+    // This is not good because it conflicts with our 0x0 to 31 programmed
+    // interrupts So we need to remap them to 32 - 47
+
+    // Remap the PIC
+    port_byte_out(0x20, 0x11);
+    port_byte_out(0xA0, 0x11);
+    port_byte_out(0x21, 0x20);
+    port_byte_out(0xA1, 0x28);
+    port_byte_out(0x21, 0x04);
+    port_byte_out(0xA1, 0x02);
+    port_byte_out(0x21, 0x01);
+    port_byte_out(0xA1, 0x01);
+    port_byte_out(0x21, 0x0);
+    port_byte_out(0xA1, 0x0);
+
+    // Install the IRQs
+    set_idt_gate(32, (u32)irq0);
+    set_idt_gate(33, (u32)irq1);
+    set_idt_gate(34, (u32)irq2);
+    set_idt_gate(35, (u32)irq3);
+    set_idt_gate(36, (u32)irq4);
+    set_idt_gate(37, (u32)irq5);
+    set_idt_gate(38, (u32)irq6);
+    set_idt_gate(39, (u32)irq7);
+    set_idt_gate(40, (u32)irq8);
+    set_idt_gate(41, (u32)irq9);
+    set_idt_gate(42, (u32)irq10);
+    set_idt_gate(43, (u32)irq11);
+    set_idt_gate(44, (u32)irq12);
+    set_idt_gate(45, (u32)irq13);
+    set_idt_gate(46, (u32)irq14);
+    set_idt_gate(47, (u32)irq15);
+
+    set_idt(); // Load with ASM
 
     set_idt();
 }
@@ -87,5 +126,26 @@ void isr_handler(registers_t r)
     tty_puts(s);
     tty_puts(exception_messages[r.int_no]);
 
-    // TODO: __asm__("hlt"); for some int codes
+    __asm__("hlt");
+}
+
+void register_interrupt_handler(u8 n, isr_t handler)
+{
+    interrupt_handlers[n] = handler;
+}
+
+void irq_handler(registers_t r)
+{
+    // After an interrupt we send a signal to the PIC, in order to be able
+    // to send another one
+    if (r.int_no >= 40)
+        port_byte_out(0xA0, 0x20); // slave
+    port_byte_out(0x20, 0x20); // master
+
+    // to be able to define custom handlers easily
+    if (interrupt_handlers[r.int_no] != 0)
+    {
+        isr_t handler = interrupt_handlers[r.int_no];
+        handler(r);
+    }
 }
