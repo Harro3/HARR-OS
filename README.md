@@ -4,7 +4,7 @@ Experimenting with C and x86, making an OS
 
 For now, timer, tty, and keyboard support with very basic shell with echo, help and clear commands, may be extended in the future.
 
-![[./docs/assets/example.png]]
+![example use](./docs/assets/example.png)
 
 # Booting with qemu:
 
