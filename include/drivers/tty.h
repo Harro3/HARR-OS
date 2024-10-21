@@ -32,6 +32,9 @@ enum tty_color
 
 void tty_set_fg_color(enum tty_color color);
 void tty_set_bg_color(enum tty_color color);
+enum tty_color tty_get_fg_color(void);
+enum tty_color tty_get_bg_color(void);
+void tty_set_default_color(void);
 
 void tty_set_cursor_pos(int x, int y);
 void tty_clear(void);

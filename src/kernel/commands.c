@@ -53,7 +53,11 @@ void parse_command(char *str)
     }
     else
     {
-        tty_print("ERROR: Unknown command: ");
+        enum tty_color bg = tty_get_bg_color();
+        tty_set_bg_color(RED);
+        tty_print("ERROR:");
+        tty_set_bg_color(bg);
+        tty_print(" Unknown command: ");
         tty_puts(str);
     }
 }

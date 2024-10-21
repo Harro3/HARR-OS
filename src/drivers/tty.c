@@ -32,6 +32,22 @@ void tty_set_bg_color(enum tty_color color)
     tty_bg_color = color;
 }
 
+enum tty_color tty_get_fg_color(void)
+{
+    return tty_fg_color;
+}
+
+enum tty_color tty_get_bg_color(void)
+{
+    return tty_bg_color;
+}
+
+void tty_set_default_color(void)
+{
+    tty_fg_color = WHITE;
+    tty_bg_color = BLACK;
+}
+
 void tty_clear(void)
 {
     for (int i = 0; i < TTY_ROWS * TTY_COLS; i++)

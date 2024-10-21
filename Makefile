@@ -12,6 +12,7 @@ OBJDIR=$(BUILDDIR)/obj
 SRC=$(wildcard src/kernel/*.c src/drivers/*.c src/stdlib/*.c src/x86/*.c)
 HEADERS=$(wildcard include/**/*.c)
 KERNEL_ENTRY=src/kernel/entry.asm
+KERNEL_LD_SCRIPT="src/kernel/kernel.ld"
 
 KERNEL_ENTRY_OBJ=$(patsubst src/%.asm, $(OBJDIR)/%.o, $(KERNEL_ENTRY))
 OBJ=$(patsubst src/%.c, $(OBJDIR)/%.o, $(SRC)) $(OBJDIR)/x86/interrupt.o
@@ -27,10 +28,10 @@ boot: $(BIN)
 	$(QEMU) -fda $(BIN)
 
 $(KERNEL_BIN): $(KERNEL_ENTRY_OBJ) $(OBJ)
-	$(LD) -o $@ -Ttext 0x1000 $^ --oformat binary
+	$(LD) -o $@ -T$(KERNEL_LD_SCRIPT) $^ --oformat binary
 
 $(KERNEL_ELF): $(KERNEL_ENTRY_OBJ) $(OBJ)
-	$(LD) -o $@ -Ttext 0x1000 $^
+	$(LD) -o $@ -T$(KERNEL_LD_SCRIPT) $^
 
 debug: CFLAGS+=-g
 debug: $(BIN) $(KERNEL_ELF)
