@@ -1,6 +1,9 @@
 #include "drivers/tty.h"
 #include "kernel/commands.h"
+#include "string.h"
 #include "x86/isr.h"
+
+extern void *end;
 
 void prompt(void)
 {
@@ -18,6 +21,11 @@ int main(void)
     tty_puts("Welcome to HARR-OS !\n");
     help();
     tty_putc('\n');
+
+    /*char asc[256];*/
+    /*itoa((int)(&end), asc);*/
+    /*tty_print("END ADDR: ");*/
+    /*tty_puts(asc);*/
 
     prompt();
 }
