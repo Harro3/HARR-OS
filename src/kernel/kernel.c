@@ -1,9 +1,10 @@
 #include "drivers/tty.h"
+#include "kernel/commands.h"
 #include "x86/isr.h"
 
 void prompt(void)
 {
-    tty_print("ECHOSH$ ");
+    tty_print("HARR-OS$ ");
 }
 
 int main(void)
@@ -13,12 +14,20 @@ int main(void)
 
     tty_clear();
     tty_set_cursor_pos(0, 0);
+
+    tty_puts("Welcome to HARR-OS !\n");
+    help();
+    tty_putc('\n');
+
     prompt();
 }
 
 void user_input_event(char *input)
 {
     tty_putc('\n');
-    tty_puts(input);
+
+    parse_command(input);
+    tty_putc('\n');
+
     prompt();
 }

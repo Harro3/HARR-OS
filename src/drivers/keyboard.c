@@ -40,9 +40,6 @@ static void stream_push(char c)
         stream_flush();
     }
 
-    stream.input[stream.index] = c;
-    stream.index++;
-
     if (c == '\n')
     {
         stream_flush();
@@ -50,6 +47,8 @@ static void stream_push(char c)
     else
     {
         tty_putc(c);
+        stream.input[stream.index] = c;
+        stream.index++;
     }
 }
 

@@ -55,3 +55,29 @@ void itoa(int n, char *res)
         n /= 10;
     }
 }
+
+int strcmp(char *a, char *b)
+{
+    while (*a && *b && *a == *b)
+    {
+        a++;
+        b++;
+    }
+
+    if (!*a && !*b)
+    {
+        return 0;
+    }
+
+    if (!*a)
+    {
+        return -1;
+    }
+
+    if (!*b)
+    {
+        return 1;
+    }
+
+    return *a - *b;
+}
