@@ -1,6 +1,6 @@
 #include "drivers/tty.h"
 #include "kernel/commands.h"
-#include "string.h"
+#include "stdlib/io.h"
 #include "x86/isr.h"
 
 extern void *end;
@@ -22,10 +22,7 @@ int main(void)
     help();
     tty_putc('\n');
 
-    /*char asc[256];*/
-    /*itoa((int)(&end), asc);*/
-    /*tty_print("END ADDR: ");*/
-    /*tty_puts(asc);*/
+    printf("END PTR: 0x%x\n", &end);
 
     prompt();
 }
