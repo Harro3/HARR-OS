@@ -56,6 +56,22 @@ void itoa(int n, char *res)
     }
 }
 
+int atoi(char *str)
+{
+    int sign = 1 - 2 * (*str == '-');
+    int res = 0;
+    if (sign < 0)
+        str++;
+    while (*str && *str >= '0' && *str < '9')
+    {
+        res *= 10;
+        res += *str - '0';
+        str++;
+    }
+
+    return res * sign;
+}
+
 int strcmp(char *a, char *b)
 {
     while (*a && *b && *a == *b)

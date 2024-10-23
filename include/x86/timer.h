@@ -5,6 +5,6 @@
 
 void init_timer(u32 freq);
 
-u32 get_cpu_tick(void);
+void sleep(u32 ms);
 
 #endif

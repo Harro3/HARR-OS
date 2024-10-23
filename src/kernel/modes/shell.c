@@ -1,6 +1,3 @@
-#ifndef SHELL_H
-#define SHELL_H
-
 #include "kernel/modes/shell.h"
 
 #include "drivers/keyboard.h"
@@ -32,7 +29,7 @@ void shell_input_event(char *input)
 {
     tty_putc('\n');
 
-    parse_command(input);
+    exec_cmd(input);
     if (get_mode_id() != SHELL)
     {
         return;
@@ -87,7 +84,7 @@ void shell_enter(void)
     tty_clear();
     tty_set_cursor_pos(0, 0);
     tty_puts("Welcome to HARR-OS !\n");
-    help();
+    help_cmd(NULL);
     tty_putc('\n');
 
     prompt();
@@ -104,5 +101,3 @@ void shell_keystroke_event(enum scancode scancode)
         stream_push(sc_ascii[scancode]);
     }
 }
-
-#endif
