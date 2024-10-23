@@ -1,4 +1,4 @@
-#include "scancode.h"
+#include "kernel/modes/scancode.h"
 
 #include "drivers/tty.h"
 #include "stdlib/io.h"

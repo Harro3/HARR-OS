@@ -1,10 +1,8 @@
 #include "kernel/commands.h"
 
 #include "drivers/tty.h"
-#include "kernel/kernel.h"
-#include "modes/scancode.h"
+#include "kernel/modes/mode.h"
 #include "stdlib/io.h"
-#include "stdlib/memory.h"
 #include "stdlib/string.h"
 
 void help(void)
@@ -13,8 +11,13 @@ void help(void)
     tty_puts("  HELP: Shows this help message");
     tty_puts("  CLEAR: Clears the terminal");
     tty_puts("  ECHO <arg>: Prints <arg> in the terminal");
-    tty_puts(
-        "  SCANCODE: enter scancode mode (prints scancode received by CPU)");
+    tty_puts("  MODE <mode>: Enters specified mode");
+
+    for (size_t i = 0; i < mode_count(); i++)
+    {
+        printf("    %s: %s\n", kernel_modes[i].name, kernel_modes[i].help);
+    }
+
     tty_puts("\nTo exit any mode, press the ESCAPE key.");
 }
 
@@ -57,10 +60,9 @@ void parse_command(char *str)
     {
         echo(arg);
     }
-    else if (!strcmp(str, "SCANCODE"))
+    else if (!strcmp(str, "MODE"))
     {
-        kernel_mode = SCANCODE;
-        scancode_enter();
+        mode_switch(arg);
     }
     else
     {
