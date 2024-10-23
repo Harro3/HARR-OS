@@ -1,8 +1,9 @@
 #include "kernel/commands.h"
 
-#include <string.h>
-
 #include "drivers/tty.h"
+#include "stdlib/io.h"
+#include "stdlib/memory.h"
+#include "stdlib/string.h"
 
 void help(void)
 {
@@ -10,6 +11,20 @@ void help(void)
     tty_puts("  HELP: Shows this help message");
     tty_puts("  CLEAR: Clears the terminal");
     tty_puts("  ECHO <arg>: Prints <arg> in the terminal");
+}
+
+void alloc(void)
+{
+    char *test = malloc(4);
+    test[0] = 'a';
+    test[1] = 'b';
+    test[2] = 'c';
+    test[3] = 0;
+
+    printf("%s\n", test);
+    printf("0x%x\n", test);
+
+    free(test);
 }
 
 void clear(void)
@@ -50,6 +65,10 @@ void parse_command(char *str)
     else if (!strcmp(str, "ECHO"))
     {
         echo(arg);
+    }
+    else if (!strcmp(str, "ALLOC"))
+    {
+        alloc();
     }
     else
     {

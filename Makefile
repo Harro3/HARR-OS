@@ -2,15 +2,15 @@ CC=$(PWD)/cross/bin/i386-elf-gcc
 LD=$(PWD)/cross/bin/i386-elf-ld
 GDB=$(PWD)/cross/bin/i386-elf-gdb
 AS=nasm
-QEMU=qemu-system-x86_64
+QEMU=qemu-system-i386
 
 CFLAGS=-Iinclude -Iinclude/stdlib -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -Wvla -pedantic -std=c99
 
 BUILDDIR=./build
 OBJDIR=$(BUILDDIR)/obj
 
-SRC=$(wildcard src/kernel/*.c src/drivers/*.c src/stdlib/*.c src/x86/*.c)
-HEADERS=$(wildcard include/**/*.c)
+SRC=$(wildcard src/kernel/*.c src/drivers/*.c src/stdlib/*.c src/stdlib/**/*.c src/x86/*.c)
+HEADERS=$(wildcard include/**/*.h)
 KERNEL_ENTRY=src/kernel/entry.asm
 KERNEL_LD_SCRIPT="src/kernel/kernel.ld"
 

@@ -1,9 +1,8 @@
 #include "drivers/tty.h"
 #include "kernel/commands.h"
 #include "stdlib/io.h"
+#include "stdlib/memory.h"
 #include "x86/isr.h"
-
-extern void *end;
 
 void prompt(void)
 {
@@ -21,8 +20,6 @@ int main(void)
     tty_puts("Welcome to HARR-OS !\n");
     help();
     tty_putc('\n');
-
-    printf("END PTR: 0x%x\n", &end);
 
     prompt();
 }
