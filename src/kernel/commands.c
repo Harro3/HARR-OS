@@ -1,6 +1,8 @@
 #include "kernel/commands.h"
 
 #include "drivers/tty.h"
+#include "kernel/kernel.h"
+#include "modes/scancode.h"
 #include "stdlib/io.h"
 #include "stdlib/memory.h"
 #include "stdlib/string.h"
@@ -11,20 +13,9 @@ void help(void)
     tty_puts("  HELP: Shows this help message");
     tty_puts("  CLEAR: Clears the terminal");
     tty_puts("  ECHO <arg>: Prints <arg> in the terminal");
-}
-
-void alloc(void)
-{
-    char *test = malloc(4);
-    test[0] = 'a';
-    test[1] = 'b';
-    test[2] = 'c';
-    test[3] = 0;
-
-    printf("%s\n", test);
-    printf("0x%x\n", test);
-
-    free(test);
+    tty_puts(
+        "  SCANCODE: enter scancode mode (prints scancode received by CPU)");
+    tty_puts("\nTo exit any mode, press the ESCAPE key.");
 }
 
 void clear(void)
@@ -66,9 +57,10 @@ void parse_command(char *str)
     {
         echo(arg);
     }
-    else if (!strcmp(str, "ALLOC"))
+    else if (!strcmp(str, "SCANCODE"))
     {
-        alloc();
+        kernel_mode = SCANCODE;
+        scancode_enter();
     }
     else
     {

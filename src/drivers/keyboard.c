@@ -6,10 +6,9 @@
 #include "x86/isr.h"
 #include "x86/ports.h"
 
-#define BACKSPACE 0x0E
-#define ENTER 0x1C
-
 #define BUF_SIZE 256
+
+enum scancode last_pressed;
 
 static struct
 {
@@ -29,7 +28,7 @@ const char sc_ascii[] = { 0,    0,   '1', '2',  '3', '4', '5', '6', '7',  '8',
 static void stream_flush(void)
 {
     stream.input[stream.index] = 0;
-    user_input_event(stream.input);
+    shell_input_event(stream.input);
     stream.index = 0;
 }
 
@@ -70,7 +69,14 @@ static void keyboard_callback(registers_t regs)
 {
     (void)regs;
     /* The PIC leaves us the scancode in port 0x60 */
-    u8 scancode = port_byte_in(0x60);
+    enum scancode scancode = port_byte_in(0x60);
+
+    keystroke_event(scancode);
+    last_pressed = scancode;
+    if (kernel_mode != SHELL)
+    {
+        return;
+    }
 
     if (scancode > SC_MAX)
         return;
