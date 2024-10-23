@@ -6,8 +6,6 @@
 #include "x86/isr.h"
 #include "x86/ports.h"
 
-enum scancode last_pressed;
-
 #define SC_MAX 57
 
 static void keyboard_callback(registers_t regs)
@@ -19,7 +17,6 @@ static void keyboard_callback(registers_t regs)
         return;
 
     keystroke_event(scancode);
-    last_pressed = scancode;
 }
 
 void init_keyboard(void)

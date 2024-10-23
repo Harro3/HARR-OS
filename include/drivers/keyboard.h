@@ -34,6 +34,4 @@ enum scancode
 
 };
 
-extern enum scancode last_pressed;
-
 #endif
