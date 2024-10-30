@@ -84,7 +84,7 @@ void shell_enter(void)
     tty_clear();
     tty_set_cursor_pos(0, 0);
     tty_puts("Welcome to HARR-OS !\n");
-    help_cmd(NULL);
+    exec_cmd("HELP");
     tty_putc('\n');
 
     prompt();

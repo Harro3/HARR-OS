@@ -25,12 +25,6 @@ extern struct command commands[];
 
 size_t get_command_count(void);
 
-int help_cmd(char *arg);
-int clear_cmd(char *arg);
-int echo_cmd(char *arg);
-int sleep_cmd(char *arg);
-int mode_cmd(char *arg);
-
 int exec_cmd(char *cmd);
 
 #endif
