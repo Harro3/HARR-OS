@@ -90,6 +90,9 @@ void shell_enter(void)
     prompt();
 }
 
+void shell_exit(void)
+{}
+
 void shell_keystroke_event(enum scancode scancode)
 {
     if (scancode == BACKSPACE)

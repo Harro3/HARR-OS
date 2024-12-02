@@ -6,6 +6,7 @@
 #include "x86/types.h"
 
 typedef void (*enter_mode_t)(void);
+typedef void (*exit_mode_t)(void);
 typedef void (*keystroke_event_mode_t)(enum scancode);
 
 struct kernel_mode
@@ -13,6 +14,8 @@ struct kernel_mode
     char *name;
     char *help;
     enter_mode_t enter_ptr;
+    exit_mode_t exit_ptr;
+
     keystroke_event_mode_t keystroke_event_ptr;
 };
 

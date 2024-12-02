@@ -11,6 +11,9 @@ void scancode_enter(void)
     tty_puts("=============\n");
 }
 
+void scancode_exit(void)
+{}
+
 void scancode_keystroke_event(enum scancode scancode)
 {
     printf("- 0x%x\n", scancode);

@@ -12,17 +12,20 @@ struct kernel_mode kernel_modes[] = {
                 .help =
                     "Type commands to perform various actions or switch mode",
                 .enter_ptr = shell_enter,
+                .exit_ptr = shell_exit,
                 .keystroke_event_ptr = shell_keystroke_event },
     [SCANCODE] = { .name = "SCANCODE",
                    .help =
                        "Displays scancodes as received by the CPU in real time",
                    .enter_ptr = scancode_enter,
+                   .exit_ptr = scancode_exit,
                    .keystroke_event_ptr = scancode_keystroke_event
 
     },
     [SNAKE] = { .name = "SNAKE",
                 .help = "Starts playing snake game",
                 .enter_ptr = snake_enter,
+                .exit_ptr = snake_exit,
                 .keystroke_event_ptr = snake_keystroke_event }
 
 };
@@ -46,6 +49,8 @@ void mode_switch(char *mode_name)
     {
         if (!strcmp(mode_name, kernel_modes[i].name))
         {
+            if (kernel_mode)
+                kernel_mode->exit_ptr();
             kernel_mode = kernel_modes + i;
             kernel_modes[i].enter_ptr();
             return;
