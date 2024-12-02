@@ -1,6 +1,6 @@
-CC=$(PWD)/cross/bin/i386-elf-gcc
-LD=$(PWD)/cross/bin/i386-elf-ld
-GDB=$(PWD)/cross/bin/i386-elf-gdb
+CC=i686-elf-gcc
+LD=i686-elf-ld
+GDB=i686-elf-gdb
 AS=nasm
 QEMU=qemu-system-i386
 
