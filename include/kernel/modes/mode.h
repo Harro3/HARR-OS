@@ -20,6 +20,7 @@ enum kernel_mode_index
 {
     SHELL = 0,
     SCANCODE,
+    SNAKE,
 };
 
 extern struct kernel_mode kernel_modes[];

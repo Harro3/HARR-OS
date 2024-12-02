@@ -3,6 +3,7 @@
 #include "drivers/tty.h"
 #include "kernel/modes/scancode.h"
 #include "kernel/modes/shell.h"
+#include "kernel/modes/snake.h"
 #include "stdlib/io.h"
 #include "stdlib/string.h"
 
@@ -18,7 +19,11 @@ struct kernel_mode kernel_modes[] = {
                    .enter_ptr = scancode_enter,
                    .keystroke_event_ptr = scancode_keystroke_event
 
-    }
+    },
+    [SNAKE] = { .name = "SNAKE",
+                .help = "Starts playing snake game",
+                .enter_ptr = snake_enter,
+                .keystroke_event_ptr = snake_keystroke_event }
 
 };
 struct kernel_mode *kernel_mode;
