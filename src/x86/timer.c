@@ -6,9 +6,13 @@
 
 u32 count_down;
 
+static u32 tick;
+
 static void timer_callback(registers_t regs)
 {
     (void)regs;
+
+    tick++;
 
     if (count_down > 0)
     {
@@ -24,6 +28,11 @@ void sleep(u32 ms)
     {
         __asm__("hlt");
     }
+}
+
+u32 get_current_tick(void)
+{
+    return tick;
 }
 
 void init_timer(u32 freq)

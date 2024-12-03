@@ -2,7 +2,7 @@ CC=i686-elf-gcc
 LD=i686-elf-ld
 GDB=i686-elf-gdb
 AS=nasm
-QEMU=qemu-system-i386
+QEMU=qemu-system-x86_64
 
 CFLAGS=-Iinclude -Iinclude/stdlib -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -Wvla -pedantic -std=c99
 

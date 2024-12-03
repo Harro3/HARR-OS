@@ -97,3 +97,13 @@ int strcmp(char *a, char *b)
 
     return *a - *b;
 }
+
+int strlen(char *s)
+{
+    int res = 0;
+    while (s[res])
+    {
+        res++;
+    }
+    return res;
+}

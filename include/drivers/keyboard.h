@@ -30,8 +30,12 @@ enum scancode
     UP_ARROW = 0x48,
     LEFT_ARROW = 0x4b,
     RIGHT_ARROW = 0x4d,
-    DOWN_ARROW = 0x50
+    DOWN_ARROW = 0x50,
 
+    SC_W = 0x11,
+    SC_A = 0x1e,
+    SC_S = 0x1f,
+    SC_D = 0x20,
 };
 
 #endif

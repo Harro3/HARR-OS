@@ -8,5 +8,6 @@ void itoa(int n, char *res);
 int atoi(char *str);
 
 int strcmp(char *a, char *b);
+int strlen(char *s);
 
 #endif
