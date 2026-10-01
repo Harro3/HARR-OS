@@ -48,6 +48,23 @@ int running = 1;
 void snake_enter(void)
 {
     tty_clear();
+
+    for (int i = 0; i < TTY_ROWS; i++)
+    {
+        tty_set_cursor_pos(0, i);
+        tty_putc('|');
+        tty_set_cursor_pos(TTY_COLS - 1, i);
+        tty_putc('|');
+    }
+
+    for (int i = 0; i < TTY_COLS; i++)
+    {
+        tty_set_cursor_pos(i, 1);
+        tty_putc('-');
+        tty_set_cursor_pos(i, TTY_ROWS - 1);
+        tty_putc('-');
+    }
+
     tty_set_cursor_pos(0, 0);
     snake = snake_init(10, 10);
 
@@ -157,8 +174,8 @@ void snake_update(struct snake *snake, int *apple_x, int *apple_y)
     int new_head_x = prev_x;
     int new_head_y = prev_y;
 
-    if (new_head_x < 0 || new_head_x >= TTY_COLS || new_head_y < 0
-        || new_head_y >= TTY_ROWS)
+    if (new_head_x < 1 || new_head_x >= TTY_COLS - 1 || new_head_y < 1
+        || new_head_y >= TTY_ROWS - 1)
     {
         running = 0;
     }
@@ -231,7 +248,7 @@ void idx_to_coords(int *idx, int *x, int *y)
 
 void spawn_apple(struct snake *snake, int *apple_x, int *apple_y)
 {
-    const int total_cells = TTY_ROWS * TTY_COLS;
+    const int total_cells = (TTY_ROWS - 2) * (TTY_COLS - 2);
 
     int valid_pos_count = total_cells - snake->length;
     int current_tick = get_current_tick();
@@ -243,6 +260,8 @@ void spawn_apple(struct snake *snake, int *apple_x, int *apple_y)
     while (!pos_is_valid)
     {
         idx_to_coords(&pos, &x, &y);
+        x += 1;
+        y += 1;
         pos_is_valid = 1;
         for (struct snake_elt *tmp = snake->head; tmp; tmp = tmp->next)
         {
